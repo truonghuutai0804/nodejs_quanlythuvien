@@ -12,6 +12,19 @@ class AdminContoller {
             )
             .catch(next);
     }
+
+    //GET admin/books/create
+    create(req, res, next) {
+        res.render('books/create');
+    }
+
+    //POST /admin/store
+    store(req, res, next) {
+        const book = new Book(req.body);
+        book.save()
+            .then(() => res.redirect('/'))
+            .catch((error) => {});
+    }
 }
 
 module.exports = new AdminContoller();
