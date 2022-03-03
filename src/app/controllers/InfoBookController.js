@@ -11,7 +11,7 @@ class BookContoller {
             .catch(next);
     }
 
-    //GET /books/create
+    //GET admin/books/create
     create(req, res, next) {
         res.render('books/create');
     }
