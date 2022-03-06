@@ -44,6 +44,13 @@ class AdminContoller {
             .then(() => res.redirect('/admin/stored/books'))
             .catch(next);
     }
+
+    //DELETE admin/books/:id
+    destroy(req, res, next) {
+        Book.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
 }
 
 module.exports = new AdminContoller();
