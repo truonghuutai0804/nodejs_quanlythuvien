@@ -1,18 +1,47 @@
 const Book = require('../models/Book');
+// const Category = require('../models/Category');
+// const Author = require('../models/Author');
+// const AuBook = require('../models/AuBook');
+// const Publisher = require('../models/Publisher');
+// const PubBook = require('../models/PubBook');
+
 const { multipleMongooseToObject } = require('../../util/mongoose');
 const { mongooseToObject } = require('../../util/mongoose');
 
 class AdminContoller {
     //GET admin/stored/books
     storedBooks(req, res, next) {
+
+        // PubBook.find({})
+        //     .populate({ modal: 'Book', path: 'Sach' })
+        //     .populate({ modal: 'Publisher', path: 'Nxb' })
+        //     .then((pubbooks) =>
+        //             console.log(pubbooks)
+        //     )
+        //     .catch(next);
+    
+
+        // Book.findOne({})
+        // .populate({ modal: 'Category', path: 'loaiSach' })
+        // .then((books) =>
+        //     // console.log(books)
+        //     console.log(books.loaiSach.tenloai)
+        // )
+        // .catch(next);
+
+
+// dưới này phải có, t ko có sửa đâu
         Book.find({})
-            .then((books) =>
-                res.render('admin/stored-books', {
-                    books: multipleMongooseToObject(books),
-                }),
-            )
-            .catch(next);
+        .then((books) =>
+            res.render('admin/stored-books', {
+                books: multipleMongooseToObject(books),
+            }),
+        )
+        .catch(next);
     }
+
+
+
 
     //GET admin/books/create
     create(req, res, next) {
@@ -34,7 +63,7 @@ class AdminContoller {
     store(req, res, next) {
         const book = new Book(req.body);
         book.save()
-            .then(() => res.redirect('/'))
+            .then(() => res.redirect('/admin/stored/books'))
             .catch((error) => {});
     }
 
