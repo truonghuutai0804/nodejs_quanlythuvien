@@ -4,23 +4,23 @@ const Schema = mongoose.Schema;
 
 mongoose.plugin(slug);
 const Borrow = new Schema(
-    {           
+    {
         _id: Schema.Types.ObjectId,
-        Sinhvien: {
+        user: {
             type: Schema.Types.ObjectId,
-            ref: 'Student',
+            ref: 'User',
         },
-        Nhanvien: {
+        staff: {
             type: Schema.Types.ObjectId,
             ref: 'Staff',
         },
-        Sach: {
+        book: {
             type: Schema.Types.ObjectId,
             ref: 'Book',
         },
-        ngayMuon:  { type: Date, require: true },
-        ngayHen:  { type: Date, require: true },
-        ngayTra:  { type: Date, require: true },
+        borrowDate: { type: Date, require: true },
+        appointmentDate: { type: Date, require: true },
+        returnDate: { type: Date },
     },
     {
         timestamps: true,

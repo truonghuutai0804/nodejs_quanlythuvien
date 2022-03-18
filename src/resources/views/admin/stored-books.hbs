@@ -1,44 +1,31 @@
 <div class="mt-4">
     <h3>Sách trong thư viện</h3>
-    {{!-- <div class="mt-3 d-flex ">
-      <div class="form-check ">
-        <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
-        <label class="form-check-label" for="checkbox-all">
-          Chọn tất cả
-        </label>
-      </div>
-      <select class="form-select form-select-sm select-all-delete ms-3" aria-label="Default select example">
-        <option selected>-- Hành động --</option>
-        <option value="1">Xóa</option>
-      </select>
-      <button class="btn btn-primary btn-sm ms-3">Thực hiện</button>
-    </div> --}}
   
     <table class="table mt-3 ">
         <thead>
             <tr>
-                {{!-- <th scope="col"></th> --}}
                 <th scope="col">#</th>
                 <th scope="col">Tên sách</th>
-                <th scope="col" colspan="2">Mô tả</th>
+                <th scope="col" >Mô tả</th>
+                <th scope="col" >Tác giả</th>
+                <th scope="col" colspan="2">Loại sách</th>
             </tr>
         </thead>
         <tbody>
-            {{#each books}}
+            {{#each aubooks}}
+              {{#each this.Sach}}
             <tr>
-                {{!-- <td>
-                  <div class="form-check ">
-                    <input class="form-check-input" type="checkbox" name="bookIds[]" value="{{this._id}}">
-                  </div>
-                </td> --}}
                 <th scope="row">{{sum @index 1}}</th>
-                <td>{{this.name}}</td>
-                <td>{{this.description}}</td>
+                <td>{{this.nameBook}}</td>
+                <td>{{this.descriptionBook}}</td>
+                <td>{{this.tentg}}</td>
+                <td>{{this.categoryBook.tenloai}}</td>
                 <td>
                     <a href="/admin/books/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
-                    <a href="" class="btn btn-danger" data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-book-modal">Xóa</a>
+                    <a href="" class="btn btn-danger" data-id="{{this.Sach._id}}" data-bs-toggle="modal" data-bs-target="#delete-book-modal">Xóa</a>
                 </td>
             </tr>
+              {{/each}}
             {{/each}}
         </tbody>
     </table>
@@ -87,16 +74,5 @@
         deleteForm.submit();
     }
 
-    // Checkbox all changed
-    //checkboxAll.change( () => {
-    //  var isCheckedAll = checkboxAll.prop('checked')
-    //  bookItemCheckbox.prop('checked',isCheckedAll)
-    //})
-
-    // Book item checkbox changed
-    //bookItemCheckbox.change( () => {
-    //  var isCheckedAll = bookItemCheckbox.length === $('input[name="bookIds[]"]:checked').length
-    //  checkboxAll.prop('checked',isCheckedAll)
-    //})
 
 </script>
