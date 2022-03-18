@@ -14,7 +14,7 @@ const Student = new Schema(
         majorUser: { type: String },
         addressUser: { type: String, require: true },
         issueDate: { type: Date },
-        expirationDate: { type: Date },
+        expirationDate: { type: Date, default: Date.now },
         contentViolate: { type: [String] },
         penalizeViolate: { type: [String] },
         levelViolate: { type: [String] },

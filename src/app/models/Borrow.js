@@ -18,7 +18,7 @@ const Borrow = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Book',
         },
-        borrowDate: { type: Date, require: true },
+        borrowDate: { type: Date, require: true, default: Date.now },
         appointmentDate: { type: Date, require: true },
         returnDate: { type: Date },
     },
