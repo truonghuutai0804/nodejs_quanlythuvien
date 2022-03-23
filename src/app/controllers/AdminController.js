@@ -1,9 +1,7 @@
 const Book = require('../models/Book');
 const Category = require('../models/Category');
 const Author = require('../models/Author');
-const AuBook = require('../models/AuBook');
-// const Publisher = require('../models/Publisher');
-// const PubBook = require('../models/PubBook');
+const Publisher = require('../models/Publisher');
 
 const { multipleMongooseToObject } = require('../../util/mongoose');
 const { mongooseToObject } = require('../../util/mongoose');
@@ -11,85 +9,41 @@ const { mongooseToObject } = require('../../util/mongoose');
 class AdminContoller {
     //GET admin/stored/books
     storedBooks(req, res, next) {
-        AuBook.aggregate([
-            {
-                $lookup: {
-                    from: 'books',
-                    localField: 'Sach',
-                    foreignField: '_id',
-                    as: 'Sach',
-                },
-            },
-            {
-                $lookup: {
-                    from: 'authors',
-                    localField: 'Tacgia',
-                    foreignField: '_id',
-                    as: 'Tacgia',
-                },
-            },
-            {
-                $lookup: {
-                    from: 'categories',
-                    localField: 'Sach.loaiSach',
-                    foreignField: '_id',
-                    as: 'loaiSach',
-                },
-            },
-        ])
-            .then((aubooks) => {
-                //  res.json(aubooks)
-                console.log(aubooks);
+
+        Book.find({})
+            .populate({ modal: 'Category', path: 'categoryBook'})
+            .populate({ modal: 'Author', path: 'authorBook'})
+            .populate({ modal: 'Publisher', path: 'publisherBook'})
+            .then((books) =>{
+            //    res.json(books),
                 res.render('admin/stored-books', {
-                    aubooks: aubooks,
-                });
-            })
+                    books: multipleMongooseToObject(books),
+                })
+            }
+            )
             .catch(next);
-
-        // AuBook.find({})
-        //     .populate({ modal: 'Book', path: 'Sach' })
-        //     .populate({ modal: 'Author', path: 'Tacgia' })
-        //     .then((aubooks) =>{
-        //         // console.log(aubooks[0].Sach.loaiSach)
-        //        aubooks = AuBook.aggregate( [
-        //             {
-        //               $lookup:
-        //                 {
-        //                   from: "categories",
-        //                   localField: "_id",
-        //                   foreignField: "loaiSach",
-        //                   as: "loaiSach"
-        //                 }
-        //            }
-        //          ] ),
-        //         console.log(aubooks)
-        //         }
-        //     )
-        //     .catch(next);
-
-        // Book.find({})
-        //     .populate({ modal: 'Category', path: 'loaiSach'})
-        //     .then((books) =>
-        //         // res.json(books)
-        //         res.render('admin/stored-books', {
-        //             books: multipleMongooseToObject(books),
-        //         })
-        //     )
-        //     .catch(next);
-
-        // dưới này phải có, t ko có sửa đâu
-        // Book.find({})
-        // .then((books) =>
-        //     res.render('admin/stored-books', {
-        //         books: multipleMongooseToObject(books),
-        //     }),
-        // )
-        // .catch(next);
     }
 
     //GET admin/books/create
-    create(req, res, next) {
-        res.render('books/create');
+    async create(req, res, next) {
+        let categories = await Category.find({})
+                .then()
+                .catch(next);
+
+        let authors = await Author.find({})
+                .then()
+                .catch(next);
+
+        let publishers = await Publisher.find({})
+                .then()
+                .catch(next);
+
+        res.render('books/create', {
+            categories: multipleMongooseToObject(categories),
+            authors: multipleMongooseToObject(authors),
+            publishers: multipleMongooseToObject(publishers),
+        })
+        //res.render('books/create');
     }
 
     //GET admin/books/:id/edit
@@ -108,7 +62,9 @@ class AdminContoller {
         const book = new Book(req.body);
         book.save()
             .then(() => res.redirect('/admin/stored/books'))
-            .catch((error) => {});
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     //PUT admin/books/:id

@@ -6,26 +6,26 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Tên sách</th>
-                <th scope="col" >Mô tả</th>
-                <th scope="col" >Tác giả</th>
-                <th scope="col" colspan="2">Loại sách</th>
+                <th scope="col">Tác giả</th>
+                <th scope="col">Loại sách</th>
+                <th scope="col">Nhà XB</th>
+                <th scope="col">Năm XB</th>
             </tr>
         </thead>
         <tbody>
-            {{#each aubooks}}
-              {{#each this.Sach}}
+            {{#each books}}
             <tr>
                 <th scope="row">{{sum @index 1}}</th>
-                <td>{{this.nameBook}}</td>
-                <td>{{this.descriptionBook}}</td>
-                <td>{{this.tentg}}</td>
-                <td>{{this.categoryBook.tenloai}}</td>
+                <td >{{this.nameBook}}</td>
+                <td >{{ this.authorBook.nameAuthor}}</td>
+                <td >{{this.categoryBook.nameCategory}}</td>
+                <td >{{this.publisherBook.namePublisher}}</td>
+                <td>{{dateFormat this.yearPublisherBook "MM/YYYY"}}</td>
                 <td>
                     <a href="/admin/books/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
-                    <a href="" class="btn btn-danger" data-id="{{this.Sach._id}}" data-bs-toggle="modal" data-bs-target="#delete-book-modal">Xóa</a>
+                    <a href="" class="btn btn-danger" data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-book-modal">Xóa</a>
                 </td>
             </tr>
-              {{/each}}
             {{/each}}
         </tbody>
     </table>
@@ -60,7 +60,6 @@
     var btnDeleteBook = document.getElementById('btn-delete-book-modal');
     var checkboxAll = $('#checkbox-all')
     var bookItemCheckbox = $('input[name="bookIds[]"]')
-
 
     // When dialog confirm clicked
     deleteBook.addEventListener('show.bs.modal', function (event) {

@@ -7,6 +7,7 @@ const port = 3000;
 const route = require('./routes');
 const db = require('./config/db');
 const methodOverride = require('method-override');
+const moment = require('moment');
 
 //Connect to DB
 db.connect();
@@ -23,7 +24,7 @@ app.use(express.json());
 app.use(methodOverride('_method'));
 
 //HTTP logger
-app.use(morgan('combined'));
+//app.use(morgan('combined'));
 
 // Template engine
 app.engine(
@@ -32,7 +33,9 @@ app.engine(
         extname: '.hbs',
         helpers: {
             sum: (a, b) => a + b,
-        },
+            dateFormat: (date, options) => { const formatToUse = (arguments[1] && arguments[1].hash && arguments[1].hash.format) || options
+            return moment(date).format(formatToUse);}
+            },
     }),
 );
 app.set('view engine', 'hbs');

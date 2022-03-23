@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 mongoose.plugin(slug);
 const Borrow = new Schema(
     {
-        _id: Schema.Types.ObjectId,
         user: {
             type: Schema.Types.ObjectId,
             ref: 'User',

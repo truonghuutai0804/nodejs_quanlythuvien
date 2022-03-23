@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 
 mongoose.plugin(slug);
 const Author = new Schema({
-    _id: Schema.Types.ObjectId,
     nameAuthor: { type: String, require: true },
     slug: { type: String, slug: 'nameAuthor', unique: true },
     owner: {

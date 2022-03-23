@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 mongoose.plugin(slug);
 const Staff = new Schema(
     {
-        _id: Schema.Types.ObjectId,
         nameStaff: { type: String, require: true },
         phoneStaff: { type: String, require: true },
         addressStaff: { type: String, require: true },

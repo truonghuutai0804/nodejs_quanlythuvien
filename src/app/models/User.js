@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 mongoose.plugin(slug);
 const Student = new Schema(
     {
-        _id: Schema.Types.ObjectId,
         nameUser: { type: String, require: true },
         phoneUser: { type: String, require: true },
         emailUser: { type: String, require: true },
