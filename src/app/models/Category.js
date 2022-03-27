@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 mongoose.plugin(slug);
 const Category = new Schema({
-    nameCategory: { type: String, require: true },
+    nameCategory: { type: String},
     slug: { type: String, slug: 'nameCategory', unique: true },
 });
 

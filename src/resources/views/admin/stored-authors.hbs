@@ -1,0 +1,73 @@
+<div class="mt-4">
+    <h3>Danh sách tác giả</h3>
+  
+    <table class="table mt-3 ">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên tác giả</th>
+                <th scope="col">Sở hữu</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each authors}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td >{{this.nameAuthor}}</td>
+                <td >
+                    {{#each this.owner}}
+                        {{this.nameBook}}<br>
+                    {{/each }}
+                </td>
+                <td>
+                    <a href="/admin/authors/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
+                    <a href="" class="btn btn-danger" data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-author-modal">Xóa</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{{!-- Confirm Delete authors --}}
+<div class="modal" tabindex="-1" id="delete-author-modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Thông báo xóa sách</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc chắn muốn Xóa sách này không ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button id="btn-delete-author-modal" type="button" class="btn btn-danger">Xóa bỏ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Delete Hidden form --}}
+<form name="delete-author-form" method="POST"></form>
+
+<script>
+    var authorID, button;
+    var deleteForm = document.forms['delete-author-form'];
+    var deleteAuthor = document.getElementById('delete-author-modal');
+    var btnDeleteAuthor = document.getElementById('btn-delete-author-modal');
+    
+    // When dialog confirm clicked
+    deleteAuthor.addEventListener('show.bs.modal', function (event) {
+        button = event.relatedTarget;
+        authorID = button.getAttribute('data-id');
+    })
+
+    // When delete author btn clicked
+    btnDeleteAuthor.onclick= ()=>{
+        deleteForm.action = '/admin/authors/'+ authorID + '?_method=DELETE';
+        deleteForm.submit();
+    }
+
+
+</script>

@@ -5,6 +5,7 @@ const path = require('path');
 const app = express();
 const port = 3000;
 const route = require('./routes');
+// const route2 = require('./routes/admin');
 const db = require('./config/db');
 const methodOverride = require('method-override');
 const moment = require('moment');
@@ -42,6 +43,8 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
 
 route(app);
+// route2(app);
+
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);

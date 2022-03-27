@@ -1,6 +1,8 @@
 const Book = require('../models/Book');
 const { multipleMongooseToObject } = require('../../util/mongoose');
 
+
+//GET /books
 class BooksContoller {
     index(req, res, next) {
         Book.find({})

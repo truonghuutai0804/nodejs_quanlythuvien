@@ -6,12 +6,10 @@ mongoose.plugin(slug);
 const Author = new Schema({
     nameAuthor: { type: String, require: true },
     slug: { type: String, slug: 'nameAuthor', unique: true },
-    owner: {
-        book: {
+    owner: [{
             type: Schema.Types.ObjectId,
-            ref: 'Author',
-        },
-    },
+            ref: 'Book',
+    },]
 });
 
 module.exports = mongoose.model('Author', Author);
